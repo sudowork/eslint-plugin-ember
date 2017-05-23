@@ -97,13 +97,18 @@ describe('isArrowFunctionExpression', () => {
 describe('isConciseArrowFunctionExpressionWithCall', () => {
   const node = parse('test = () => foo()').right;
   const blockNode = parse('test = () => { foo() }').right;
+  const conciseNonCallNode = parse('test = foo => foo.bar').right;
 
   it('should check if node is concise arrow function expression with call expression body', () => {
     assert.ok(utils.isConciseArrowFunctionWithCallExpression(node));
   });
 
-  it('should check if node does not have block body', () => {
+  it('should check if node has block body', () => {
     assert.ok(!utils.isConciseArrowFunctionWithCallExpression(blockNode));
+  });
+
+  it('should check if node has call expression', () => {
+    assert.ok(!utils.isConciseArrowFunctionWithCallExpression(conciseNonCallNode));
   });
 });
 
